@@ -1086,7 +1086,7 @@ int HTTPGetFormDataEDITCCMPage()
 	for(i=0;i<MAX_CCMTYPESIZE;i++)
 		{
 		if(UECSbuffer[startPos+i]=='&'){break;}
-		if(UECSbuffer[startPos+i]=='\0' || i==MAX_CCMTYPESIZE){return ccmid;}//���[���Ȃ�
+		if(UECSbuffer[startPos+i]=='\0' || i==MAX_CCMTYPESIZE){return ccmid;}//末端がない
 
 		if( (UECSbuffer[startPos+i]>='0' && UECSbuffer[startPos+i]<='9')||
 			(UECSbuffer[startPos+i]>='A' && UECSbuffer[startPos+i]<='Z')||
@@ -1167,7 +1167,7 @@ void HTTPGetFormDataLANSettingPage()
 			{UECSbuffer[startPos+i]='*';}
 			
 			if(UECSbuffer[startPos+i]=='&'){break;}
-			if(UECSbuffer[startPos+i]=='\0' || i==19){return;}//�I�[�������̂Ŗ���
+			if(UECSbuffer[startPos+i]=='\0' || i==19){return;}//終端が無いので無視
 			//prevention of Cutting multibyte UTF-8 code
 			if(i>=16 && (unsigned char)UECSbuffer[startPos+i]>=0xC0)//UTF-8 multibyte code header
 				{
@@ -1402,7 +1402,7 @@ if(ccmid*EEPROM_L_CCM_TOTAL+EEPROM_L_CCM_TOTAL>EEPROM_CCMEND){return;}//out of m
 #endif
 
 int i;
-//type��������
+//type書き込み
 for(i=0;i<=MAX_CCMTYPESIZE;i++)
 	{
 	if(EEPROM.read(ccmid*EEPROM_L_CCM_TOTAL+EEPROM_CCMTOP+EEPROM_L_CCM_TYPETXT+i)!=U_ccmList[ccmid].typeStr[i])
