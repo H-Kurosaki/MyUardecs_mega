@@ -1,5 +1,5 @@
 # MyUardecs_mega
-MyUardecs_megaの特殊バージョンVer
+MyUardecs_megaの特殊バージョンVer1.2.2
 
   Uardecs_megaからMyUardecs_megaをフォークしました。
   
