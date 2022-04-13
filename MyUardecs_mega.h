@@ -1,16 +1,9 @@
 /*
-  Uardecs.h - Library for UECS 
+  MyUardecs.h - Library for UECS Ver2.0.0
 
   Ken-ichiro Yasuba 2013.
-  updated by Hideto Kurosaki 2021.10.
+  updated by Hideto Kurosaki 2022.4.
 
-  2021/10/6
-  Uardecs_mega.hから
-  MyUardecs_mega.hをフォークしました
-  書き換え箇所はMyEthernet2.hとMyEthernetUdp2.hのファイル名のみです。
-  理由はW5500の内蔵MACアドレス設定機能を有効にするためです。
-  標準のEthernet2.hでは新バージョンからこの機能が無効になっており旧バージョン1.0.3でしか使えません
-  このライブラリのライセンスはCC BY 4.0とします。
 */
 #ifndef Uardecs_mega_h
 #define Uardecs_mega_h
@@ -26,6 +19,7 @@
 
 #include <MyEthernet2.h>
 #include <MyEthernetUdp2.h>
+
 
 #include <Arduino.h>
 #include <SPI.h>   
@@ -109,6 +103,14 @@ const char UECSccm_SR[] PROGMEM="\" SR=\""; // 6 words
 const char UECSccm_LV[] PROGMEM="\" LV=\""; // 6 words
 const char UECSccm_CCMRESCLOSE[] PROGMEM="</CCM></UECS>";
 
+const char UECSccm_CCMSEARCH[] PROGMEM = "<SEARCH type=\"";  // 14 words
+const char UECSccm_CCMSEARCH_ROOM[] PROGMEM 	= "room=\"";  // 7 words
+const char UECSccm_CCMSEARCH_REGION[] PROGMEM 	= "region=\"";  // 9 words
+const char UECSccm_CCMSEARCH_ORDER[] PROGMEM 	= "order=\"";  // 8 words
+
+const char UECSccm_CCMSERVER[] PROGMEM = "<SERVER type=\"";
+const char UECSccm_CCMSERVERCLOSE[] PROGMEM = "</SERVER></UECS>";  // 9 words
+
 
   
 /********************************/
@@ -186,6 +188,9 @@ void UECSCreateCCMPacketAndSend(struct UECSCCM* _ccm);
 void UECSupRecCCM(UECSCCM* _ccm, UECSTEMPCCM* _ccmRec);
 void UECScheckUpDate(UECSTEMPCCM* _tempCCM, unsigned long _time,int startid);
 boolean UECSresNodeScan();
+boolean UECSresCCMSearchAndSend(UECSTEMPCCM* _tempCCM);
+boolean UECSCCMSimpleHitcheck(int ccmid,short room,short region,short order);
+
 void UECSautomaticSendManager();
 void UECSautomaticValidManager(unsigned long td);
 
@@ -388,6 +393,8 @@ const char UECSTxtPartS[] PROGMEM = "S";
 const char UECSTxtPartColon[] PROGMEM = ":";
 const char UECSTxtPartOK[] PROGMEM = "OK";
 const char UECSTxtPartHyphen[] PROGMEM = "-";
+//const char UECSTxtPartStop[] PROGMEM = "!";
+//const char UECSTxtPartSend[] PROGMEM = "o";
 const char UECSTxtPartSelected[] PROGMEM = "\" selected>";
 
 
@@ -424,6 +431,7 @@ void HTTPGetFormDataLANSettingPage();
 
 void UECSupdate16520portReceive(UECSTEMPCCM* _tempCCM, unsigned long _millis);
 void UECSupdate16529port(UECSTEMPCCM* _tempCCM);
+void UECSupdate16521port(UECSTEMPCCM* _tempCCM);
 void UECSsetup();
 void UECSloop();
 /*
