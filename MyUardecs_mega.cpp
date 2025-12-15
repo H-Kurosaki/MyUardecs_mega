@@ -1708,7 +1708,7 @@ void UECSsetCCM(boolean _sender, signed char _num, const char* _name, const char
 //  U_ccmList[_num].baseAttribute[AT_REGI] = 1;
 //  U_ccmList[_num].baseAttribute[AT_ORDE] = 1;
   U_ccmList[_num].baseAttribute[AT_PRIO] = _priority;
-  strcat_P(U_ccmList[_num].typeStr,U_ccmList[_num].type);
+  strcpy_P(U_ccmList[_num].typeStr, U_ccmList[_num].type);
 
 if(U_orgAttribute.status&STATUS_PROGRAMUPDATE)
 	{
@@ -2070,12 +2070,12 @@ return true;
 bool UECSGetIPAddress(char *targetBuffer,unsigned char *ip,int *lastPos)
 {
 int _targetBuffersize=strlen(targetBuffer);
-int i;
+int i=0;
 int progPos=0;
 (*lastPos)=0;
 
 //find first number
-for((*lastPos);i<_targetBuffersize;(*lastPos)++)
+for(; (*lastPos)<_targetBuffersize; (*lastPos)++)
 	{
 	if(targetBuffer[(*lastPos)]>='0' && targetBuffer[(*lastPos)]<='9')
 		{
